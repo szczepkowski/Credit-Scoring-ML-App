@@ -22,17 +22,25 @@ except:
 
 # Dane wejściowe
 class CreditInput(BaseModel):
-    age: int
-    income: float
-    loan_amount: float
-    loan_term: int
-    credit_history: int
-    employment_years: int
+    Duration: int
+    CreditAmount: int
+    InstallmentRate: int
+    Age: int
+    NumberCredits: int
+    Job_A172: int = 0
+    Job_A173: int = 0
+    Job_A174: int = 0
+    Housing_A152: int = 0
+    Housing_A153: int = 0
 
 @app.post("/predict")
 def predict(data: CreditInput):
+    print(data)
     df = pd.DataFrame([data.dict()])
-    df = df.reindex(columns=model_features, fill_value=0)  # uporządkuj kolumny
+    missing_cols = set(model_features) - set(df.columns)
+    for col in missing_cols:
+        df[col] = 0
+    df = df[model_features]
     df_scaled = scaler.transform(df)
     prediction = model.predict(df_scaled)[0]
     probability = model.predict_proba(df_scaled)[0][1]

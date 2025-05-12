@@ -12,7 +12,7 @@ columns = [
     "Debtors", "ResidenceDuration", "Property", "Age", "OtherInstallmentPlans",
     "Housing", "NumberCredits", "Job", "PeopleLiable", "Telephone", "ForeignWorker", "Target"
 ]
-
+print()
 df = pd.read_csv(url, sep=' ', header=None, names=columns)
 
 # 2. Przetwarzanie danych
